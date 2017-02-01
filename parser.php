@@ -1,9 +1,25 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-// Parser code for the Moodle Algebra question type
-// Moodle algebra question type class
-// Author: Roger Moore <rwmoore 'at' ualberta.ca>
-// License: GNU Public License version 3
+/**
+ * Parser code for the Moodle Algebra question type
+ * @package    qtype_algebra
+ * @copyright  Roger Moore <rwmoore@ualberta.ca>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 
 // From the PHP manual: check for the existance of lcfirst and
@@ -32,14 +48,14 @@ if(!function_exists('lcfirst')) {
  * @param $b second string to compare
  * @return -1 if $a is longer than $b, 0 if they are the same length and +1 if $a is shorter
  */
-function qtype_algebra_parser_strlen_sort($a,$b) {
-    // Get the two string lengths once so we don't have to repeat the function call
-    $alen=strlen($a);
-    $blen=strlen($b);
-    // If the two lengths are equal return zero
-    if($alen==$blen) return 0;
-    // Otherwise return +1 if a>b or -1 if a<b
-    return ($alen>$blen) ? -1 : +1;
+function qtype_algebra_parser_strlen_sort($a, $b) {
+    // Get the two string lengths once so we don't have to repeat the function call!
+    $alen = strlen($a);
+    $blen = strlen($b);
+    // If the two lengths are equal return zero . 
+    if($alen == $blen) return 0;
+    // Otherwise return +1 if a>b or -1 if a<b  .
+    return ($alen > $blen) ? -1 : +1;
 }
 
 
@@ -65,11 +81,11 @@ class qtype_algebra_parser_term {
      * @param $text the text from the expression associated with the array
      * @param $commutes if set to true then this term commutes (only for 2 argument terms)
      */
-    function qtype_algebra_parser_term($nargs,$formats,$text='',$commutes=false) {
-        $this->_value=$text;
-        $this->_nargs=$nargs;
-        $this->_formats=$formats;
-        $this->_commutes=$commutes;
+    function qtype_algebra_parser_term($nargs, $formats, $text='', $commutes=false) {
+        $this->_value = $text;
+        $this->_nargs = $nargs;
+        $this->_formats = $formats;
+        $this->_commutes = $commutes;
     }
 
     /**
@@ -84,18 +100,18 @@ class qtype_algebra_parser_term {
      * @return array of the arguments that, with a format string, can be passed to sprintf
      */
     function print_args($method) {
-        // Create an empty array to store the arguments in
-        $args=array();
-        // Handle zero argument terms differently by making the
-        // first 'argument' the value of the term itself
-        if($this->_nargs==0) {
-            $args[]=$this->_value;
+        // Create an empty array to store the arguments in.
+        $args = array();
+        // Handle zero argument terms differently by making the first
+        // 'argument' the value of the term itself.
+        if($this->_nargs == 0) {
+            $args[] = $this->_value;
         } else {
             foreach($this->_arguments as $arg) {
-                $args[]=$arg->$method();
+                $args[] = $arg->$method();
             }
         }
-        // Return the array of arguments
+        // Return the array of arguments.
         return $args;
     }
 
@@ -108,14 +124,14 @@ class qtype_algebra_parser_term {
      * @return input syntax format string of the expression
      */
     function str() {
-        // First check to see if the class has been given all the arguments
+        // First check to see if the class has been given all the arguments.
         $this->check_arguments();
-        // Get an array of all the arguments except for the format string
-        $args=$this->print_args('str');
-        // Insert the format string at the front of the argument array
-        array_unshift($args,$this->_formats['str']);
-        // Call sprintf using the argument array as the arguments
-        return call_user_func_array('sprintf',$args);
+        // Get an array of all the arguments except for the format string.
+        $args = $this->print_args('str');
+        // Insert the format string at the front of the argument array.
+        array_unshift($args, $this->_formats['str']);
+        // Call sprintf using the argument array as the arguments.
+        return call_user_func_array('sprintf', $args);
     }
 
     /**
@@ -129,14 +145,14 @@ class qtype_algebra_parser_term {
      * @return LaTeX format string of the expression
      */
     function tex() {
-        // First check to see if the class has been given all the arguments
+        // First check to see if the class has been given all the arguments.
         $this->check_arguments();
-        // Get an array of all the arguments except for the format string
-        $args=$this->print_args('tex');
-        // Insert the format string at the front of the argument array
-        array_unshift($args,$this->_formats['tex']);
-        // Call sprintf using the argument array as the arguments
-        return call_user_func_array('sprintf',$args);
+        // Get an array of all the arguments except for the format string.
+        $args = $this->print_args('tex');
+        // Insert the format string at the front of the argument array.
+        array_unshift($args, $this->_formats['tex']);
+        // Call sprintf using the argument array as the arguments.
+        return call_user_func_array('sprintf', $args);
     }
 
     /**
