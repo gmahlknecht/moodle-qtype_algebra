@@ -32,3 +32,6 @@ For support use the Moodle quiz forum at https://moodle.org/mod/forum/view.php?i
 Enjoy.
 
 Jean-Michel Védrine <vedrine@univ-st-etienne.fr>
+
+ADDITIONAL README
+Update to Moodle 3.3 - work in progress
